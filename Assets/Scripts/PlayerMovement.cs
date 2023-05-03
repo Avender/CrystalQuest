@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float jumpHeight = 20f;
-    [SerializeField] private LayerMask jumpableGround;
+    [SerializeField] private float trampolineJump = 30f;
+    [SerializeField] private LayerMask[] jumpableGround;
     
     private enum MovementState
     {
@@ -20,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private static readonly int State = Animator.StringToHash("state");
+    private static readonly int Jump = Animator.StringToHash("Jump");
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateAnimationState()
     {
         MovementState state;
-        
         
         switch (_dirX)
         {
@@ -80,6 +82,24 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         var bounds = _collider2D.bounds;
-        return Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, .1f, jumpableGround);
+        return Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, .1f, jumpableGround[0]) || 
+               Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, .1f, jumpableGround[1]);
+    }
+
+    // private void OnTriggerEnter2D(Collider2D col)
+    // {
+    //     if (col.gameObject.CompareTag("Finish"))
+    //     {
+    //         _rigidbody2D.bodyType = RigidbodyType2D.Static;
+    //     }
+    // }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag($"Trampoline"))
+        {
+            col.gameObject.GetComponent<Animator>().SetTrigger(Jump);
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, trampolineJump);
+        }
     }
 }
