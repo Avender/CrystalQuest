@@ -6,9 +6,14 @@ using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
-    public int score = 0;
+    public static int score = 0;
 
     [SerializeField] public Text ScoreText;
+
+    private void Start()
+    {
+        ScoreText.text = "Score: " + score;
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -21,7 +26,7 @@ public class ItemCollector : MonoBehaviour
         else if (col.gameObject.CompareTag($"Gem_5"))
         {
             Destroy(col.gameObject);
-            score = score + 5;
+            score += 5;
             ScoreText.text = "Score: " + score;
         }
     }

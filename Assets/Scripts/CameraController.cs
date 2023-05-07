@@ -19,8 +19,8 @@ public class CameraController : MonoBehaviour
         // Vector3 boundPosition = new Vector3(Mathf.Clamp(transform1.position.x, minVal.x, maxVal.x));
         // transform1.position = new Vector3(position.x + xPos, position.y + yPos, transform1.position.z);
         transform1.position = new Vector3(Mathf.Clamp(position.x + xPos, minVal.x, maxVal.x), 
-            Mathf.Clamp(position.y + yPos, minVal.y, maxVal.y),
-            transform1.position.z);
+                                          Mathf.Clamp(position.y + yPos, minVal.y, maxVal.y),
+                                            transform1.position.z);
 
     }
 }

@@ -29,6 +29,8 @@ public class Life : MonoBehaviour
     {
         _rigidbody.bodyType = RigidbodyType2D.Static;
         _animator.SetTrigger(Death);
+        
+        
         // DestroyBody();
     }
 
