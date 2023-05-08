@@ -9,6 +9,8 @@ public class ItemCollector : MonoBehaviour
     public static int score = 0;
 
     [SerializeField] public Text ScoreText;
+    [SerializeField] private AudioSource _collectAudioSource;
+
 
     private void Start()
     {
@@ -20,12 +22,14 @@ public class ItemCollector : MonoBehaviour
         if (col.gameObject.CompareTag($"Gem_1"))
         {
             Destroy(col.gameObject);
+            _collectAudioSource.Play();
             score++;
             ScoreText.text = "Score: " + score;
         }
         else if (col.gameObject.CompareTag($"Gem_5"))
         {
             Destroy(col.gameObject);
+            _collectAudioSource.Play();
             score += 5;
             ScoreText.text = "Score: " + score;
         }

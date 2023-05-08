@@ -14,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 20f;
     [SerializeField] private float trampolineJump = 30f;
     [SerializeField] private LayerMask[] jumpableGround;
-    
+    [SerializeField] private AudioSource _jumpAudioSource;
+    [SerializeField] private AudioSource _trampolineAudioSource;
+
     private enum MovementState
     {
         Idle, Running, Jumping, Falling
@@ -41,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
         if ((Input.GetKeyDown("w") || Input.GetButtonDown("Jump")) && IsGrounded())
         {
+            _jumpAudioSource.Play();
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpHeight);
         }
 
@@ -98,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag($"Trampoline"))
         {
+            _trampolineAudioSource.Play();
             col.gameObject.GetComponent<Animator>().SetTrigger(Jump);
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, trampolineJump);
         }

@@ -9,6 +9,7 @@ public class Life : MonoBehaviour
     private Animator _animator;
     private Rigidbody2D _rigidbody;
     private static readonly int Death = Animator.StringToHash("Death");
+    [SerializeField] private AudioSource _deathAudioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +30,8 @@ public class Life : MonoBehaviour
     {
         _rigidbody.bodyType = RigidbodyType2D.Static;
         _animator.SetTrigger(Death);
-        
-        
+        _deathAudioSource.Play();
+
         // DestroyBody();
     }
 
